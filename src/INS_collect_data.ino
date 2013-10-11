@@ -36,7 +36,7 @@ void init_accel() {
     // 00 00 0000 b = 0x00
     compass.writeAccReg(LSM303_CTRL_REG2_A, 0x4F);
 
-    /*
+    //*
     // Enable Accelerometer
     // 0x3F = 0b00111111
     // Normal power mode, all axes enabled, Output data rate 1000hz
@@ -46,7 +46,7 @@ void init_accel() {
     // 0x2F = 0b00101111
     // Normal power mode, all axes enabled, Output data rate 100hz
     compass.writeAccReg(LSM303_CTRL_REG1_A, 0x2F);
-    /*/ //*
+    /*/ /*
     // Enable Accelerometer
     // 0x27 = 0b00100111
     // Normal power mode, all axes enabled, Output data rate 50hz
@@ -75,6 +75,7 @@ void setup() {
     init_gyro();
     init_accel();
 
+    nh.getHardware()->setBaud(115200);
     nh.initNode();
     nh.advertise(accelerometer);
     nh.advertise(magnetometer);
