@@ -36,12 +36,12 @@ void init_accel() {
     // 00 00 0000 b = 0x00
     compass.writeAccReg(LSM303_CTRL_REG2_A, 0x4F);
 
-    //*
+    /*
     // Enable Accelerometer
     // 0x3F = 0b00111111
     // Normal power mode, all axes enabled, Output data rate 1000hz
     compass.writeAccReg(LSM303_CTRL_REG1_A, 0x3F);
-    /*/ /*
+    /*/ //*
     // Enable Accelerometer
     // 0x2F = 0b00101111
     // Normal power mode, all axes enabled, Output data rate 100hz
@@ -107,13 +107,13 @@ void loop() {
         accelerometer_msg.y = compass.a.y * (gPerLSB * g2ms2);
         accelerometer_msg.z = compass.a.z * (gPerLSB * g2ms2);
 
-        magnetometer_msg.x = compass.m.x * (fs_magneto / maxint16 * gs2ts);
-        magnetometer_msg.y = compass.m.y * (fs_magneto / maxint16 * gs2ts);
-        magnetometer_msg.z = compass.m.z * (fs_magneto / maxint16 * gs2ts);
+        magnetometer_msg.x = compass.m.x * (fs_magneto * gs2ts / maxint16);
+        magnetometer_msg.y = compass.m.y * (fs_magneto * gs2ts / maxint16);
+        magnetometer_msg.z = compass.m.z * (fs_magneto * gs2ts / maxint16);
 
-        gyroscope_msg.x = gyro.g.x * (fs_gyro / maxint16 * degree2rad);
-        gyroscope_msg.y = gyro.g.y * (fs_gyro / maxint16 * degree2rad);
-        gyroscope_msg.z = gyro.g.z * (fs_gyro / maxint16 * degree2rad);
+        gyroscope_msg.x = gyro.g.x * (fs_gyro * degree2rad / maxint16);
+        gyroscope_msg.y = gyro.g.y * (fs_gyro * degree2rad / maxint16);
+        gyroscope_msg.z = gyro.g.z * (fs_gyro * degree2rad / maxint16);
     // }
     accelerometer.publish(&accelerometer_msg);
     magnetometer.publish(&magnetometer_msg);
